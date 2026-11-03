@@ -1,56 +1,59 @@
-import { useLocation, useNavigate, useNavigation } from 'react-router';
+import { useLocation, useNavigate, useNavigation } from "react-router";
 
-import { type GetProp, type MenuProps, Spin } from 'antd';
+import { type GetProp, type MenuProps, Spin } from "antd";
 
-import { AuditOutlined, BuildOutlined, HomeOutlined } from '@ant-design/icons';
-import { Layout } from '@domain/@shared/Layout';
+import {
+  AuditOutlined,
+  BuildOutlined,
+  HomeOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
+import { Layout } from "@domain/@shared/Layout";
 
-type Item = NonNullable<MenuProps['items']>[number];
+type Item = NonNullable<MenuProps["items"]>[number];
 
 export function MainLayout() {
-    const location = useLocation();
-    const navigate = useNavigate();
-    const navigation = useNavigation();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const navigation = useNavigation();
 
-    const initialKey = location.pathname.split('/').slice(0, 2).join('/');
+  const initialKey = location.pathname.split("/").slice(0, 2).join("/");
 
-    if (navigation.state === 'loading')
-        return <Spin fullscreen />;
+  if (navigation.state === "loading") return <Spin fullscreen />;
 
-    const dashboardItem: Item = {
-        key: '/',
-        icon: <HomeOutlined />,
-        label: 'Dashboard',
-        onClick: () => navigate('/'),
-    };
+  const dashboardItem: Item = {
+    key: "/",
+    icon: <HomeOutlined />,
+    label: "Dashboard",
+    onClick: () => navigate("/"),
+  };
 
-    const companiesItem: Item = {
-        key: '/companies',
-        icon: <BuildOutlined />,
-        label: 'Empresas',
-        onClick: () => navigate('/companies'),
-    };
+  const companiesItem: Item = {
+    key: "/companies",
+    icon: <BuildOutlined />,
+    label: "Empresas",
+    onClick: () => navigate("/companies"),
+  };
 
-    const recordsItem: Item = {
-        key: '/records',
-        icon: <AuditOutlined />,
-        label: 'Relatos',
-        onClick: () => navigate('/records'),
-    };
+  const peopleItem: Item = {
+    key: "/people",
+    icon: <UserOutlined />,
+    label: "Pessoas",
+    onClick: () => navigate("/people"),
+  };
 
-    const items = [dashboardItem, companiesItem, recordsItem];
+  const recordsItem: Item = {
+    key: "/records",
+    icon: <AuditOutlined />,
+    label: "Relatos",
+    onClick: () => navigate("/records"),
+  };
 
-    const sider: GetProp<typeof Layout.Root, 'sider'> = props => (
-        <Layout.Sider {...props}
-            items={items}
-            defaultSelectedKeys={[initialKey]}
-        />
-    );
+  const items = [dashboardItem, companiesItem, peopleItem, recordsItem];
 
-    return (
-        <Layout.Root
-            sider={sider}
-            content={() => <Layout.Content />}
-        />
-    );
+  const sider: GetProp<typeof Layout.Root, "sider"> = (props) => (
+    <Layout.Sider {...props} items={items} defaultSelectedKeys={[initialKey]} />
+  );
+
+  return <Layout.Root sider={sider} content={() => <Layout.Content />} />;
 }

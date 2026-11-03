@@ -19,19 +19,19 @@ Este documento detalha o roteiro prático e detalhado de execução, organizado 
 ## Fase 2: Implementação dos Épicos no Front-end
 
 ### 2.1 Épico 1: Gestão de Pessoas (`/people`)
-- [ ] **Tipagem e Consumo da API no Front-end:**
-  - [ ] Modelar tipos TypeScript (`person.type.ts`).
-  - [ ] Implementar serviços de consumo da API (`list-people.service.ts`, `find-person.service.ts`, `create-person.service.ts`, `update-person.service.ts`, `delete-person.service.ts`).
-  - [ ] Criar contexto de estado (`People.context.tsx`).
-- [ ] **Componentes de Interface (UI):**
-  - [ ] Tabela de listagem de pessoas (`PersonTable.tsx`) com dados e ações.
-  - [ ] Formulário com máscara visual de CPF e validações (`PersonForm.tsx`).
-  - [ ] Modal de cadastro de nova pessoa (`CreatePersonModal.tsx`).
-  - [ ] Modal de edição de pessoa (`EditPersonModal.tsx`).
-  - [ ] Ação de exclusão com confirmação (`Popconfirm`).
-  - [ ] Tratamento amigável para erro de CPF duplicado (HTTP 409).
-- [ ] **Navegação:**
-  - [ ] Adicionar rota `/people` no `router.tsx` e item no menu lateral (`Sider.tsx`).
+- [X] **Tipagem e Consumo da API no Front-end:**
+  - [X] Modelar tipos TypeScript (`person.type.ts`).
+  - [X] Implementar serviços de consumo da API (`list-people.service.ts`, `find-person.service.ts`, `create-person.service.ts`, `update-person.service.ts`, `delete-person.service.ts`).
+  - [X] Criar contexto de estado (`People.context.tsx`).
+- [X] **Componentes de Interface (UI):**
+  - [X] Tabela de listagem de pessoas (`People.page.tsx`) com dados e ações.
+  - [X] Formulário com validações e máscara de CPF (`PersonFields.tsx`).
+  - [X] Modal de cadastro de nova pessoa (`CreatePersonModal.tsx`).
+  - [X] Modal de edição de pessoa (`EditPersonModal.tsx`).
+  - [X] Ação de exclusão com confirmação (`PeopleActionsCell.tsx`).
+  - [X] Tratamento amigável para erro de CPF duplicado (HTTP 409).
+- [X] **Navegação:**
+  - [X] Adicionar rota `/people` no `router.tsx` e item no menu lateral (`MainLayout.tsx`).
 
 ### 2.2 Épico 2: Gestão de Envolvimentos nos Relatos (`/records`)
 - [ ] **Tipagem e Consumo da API no Front-end:**
