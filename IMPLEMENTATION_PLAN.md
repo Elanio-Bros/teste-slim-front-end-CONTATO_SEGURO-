@@ -60,6 +60,6 @@ Este documento detalha o roteiro prático e detalhado de execução, organizado 
   - [X] Implementar gráficos simples de distribuição (`Progress` circular e em barra do Ant Design) indicando:
     - Proporção de Relatos Anônimos vs Identificados vs Sem Participantes.
     - Distribuição dos status operacionais dos relatos.
-- [ ] **3.4 Finalização**
+- [X] **3.4 Finalização**
   - [X] Revisão geral do código e commits no repositório.
-  - [ ] Preenchimento e envio do formulário oficial de encerramento.
+  - [X] Preenchimento e envio do formulário oficial de encerramento.
