@@ -44,12 +44,9 @@ Este documento detalha o roteiro prático e detalhado de execução, organizado 
   - [X] Ação para remover vínculo de envolvido.
   - [X] Tratamento do cálculo e atualização do status de anonimato do relato.
 
-### 2.3 Bônus & Usabilidade (Diferenciais)
-- [ ] Atualizar `Dashboard.page.tsx` com cards e métricas (total de pessoas, proporção de relatos anônimos vs identificados).
-
 ---
 
-## Fase 3: Validação, Evidências e Entrega
+## Fase 3: Validação, Evidências, Bônus e Entrega
 - [X] **3.1 Testes Manuais dos Cenários Obrigatórios**
   - [X] Teste de criação e listagem de pessoas.
   - [X] Teste de tentativa de duplicidade de CPF (HTTP 409).
@@ -58,6 +55,11 @@ Este documento detalha o roteiro prático e detalhado de execução, organizado 
 - [X] **3.2 Documentação de Evidências**
   - [X] Captura de telas/evidências visuais.
   - [X] Criação do arquivo `EVIDENCES.md` detalhando passos, esperado e obtido.
-- [ ] **3.3 Finalização**
-  - [ ] Revisão geral do código e commits no repositório.
+- [X] **3.3 Bônus: Métricas e Gráficos no Dashboard (`Dashboard.page.tsx`)**
+  - [X] Implementar cards estatísticos (`Statistic` e `Card` do Ant Design): Total de Empresas, Total de Relatos e Total de Pessoas.
+  - [X] Implementar gráficos simples de distribuição (`Progress` circular e em barra do Ant Design) indicando:
+    - Proporção de Relatos Anônimos vs Identificados vs Sem Participantes.
+    - Distribuição dos status operacionais dos relatos.
+- [ ] **3.4 Finalização**
+  - [X] Revisão geral do código e commits no repositório.
   - [ ] Preenchimento e envio do formulário oficial de encerramento.
