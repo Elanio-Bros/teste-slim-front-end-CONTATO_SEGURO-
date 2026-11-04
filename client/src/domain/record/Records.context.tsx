@@ -29,6 +29,8 @@ type Value = {
     isEditModalVisible: boolean;
     setIsEditModalVisible: Dispatch<SetStateAction<Value['isEditModalVisible']>>;
     fetchRecords: () => Promise<void>;
+    involvementsVersion: number;
+    refreshInvolvements: () => void;
 };
 
 type Props = { children: (value: Value) => ReactNode };
@@ -43,6 +45,11 @@ export function RecordsContextProvider({ children }: Props) {
     const [recordId, setRecordId] = useState<Record.Model['id'] | null>(null);
     const [isCreateModalVisible, setIsCreateModalVisible] = useState(false);
     const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+    const [involvementsVersion, setInvolvementsVersion] = useState(0);
+
+    const refreshInvolvements = useCallback(() => {
+        setInvolvementsVersion(v => v + 1);
+    }, []);
 
     const app = App.useApp();
 
@@ -85,6 +92,8 @@ export function RecordsContextProvider({ children }: Props) {
         isEditModalVisible,
         setIsEditModalVisible,
         fetchRecords,
+        involvementsVersion,
+        refreshInvolvements,
     };
 
     return (

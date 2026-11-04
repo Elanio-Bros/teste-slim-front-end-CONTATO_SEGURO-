@@ -34,15 +34,15 @@ Este documento detalha o roteiro prático e detalhado de execução, organizado 
   - [X] Adicionar rota `/people` no `router.tsx` e item no menu lateral (`MainLayout.tsx`).
 
 ### 2.2 Épico 2: Gestão de Envolvimentos nos Relatos (`/records`)
-- [ ] **Tipagem e Consumo da API no Front-end:**
-  - [ ] Modelar tipos de envolvimento e papéis (`whistleblower`, `witness`, `victim`, `denounced`).
-  - [ ] Implementar serviços de consumo da API de envolvimentos (`list-record-involvements.service.ts`, `create-record-involvement.service.ts`, `delete-record-involvement.service.ts`).
-- [ ] **Componentes de Interface (UI):**
-  - [ ] Adicionar coluna **Identificação** na tabela de relatos com Tags (`Anônimo` / `Identificado`).
-  - [ ] Adicionar tabela de envolvidos dentro dos formulários/modais de Relato (`EditRecordModal` / `CreateRecordModal`).
-  - [ ] Seletor para vincular pessoa e definir papel operacional (filtrando pessoas já vinculadas).
-  - [ ] Ação para remover vínculo de envolvido.
-  - [ ] Tratamento do cálculo e atualização do status de anonimato do relato.
+- [X] **Tipagem e Consumo da API no Front-end:**
+  - [X] Modelar tipos de envolvimento e papéis (`involvement.type.ts`).
+  - [X] Implementar serviços de consumo da API de envolvimentos (`list-record-involvements.service.ts`, `create-record-involvement.service.ts`, `delete-record-involvement.service.ts`).
+- [X] **Componentes de Interface (UI):**
+  - [X] Adicionar coluna **Identificação** na tabela de relatos com Tags (`Anônimo` / `Identificado`).
+  - [X] Adicionar tabela de envolvidos dentro dos formulários/modais de Relato (`EditRecordModal` / `CreateRecordModal`).
+  - [X] Seletor para vincular pessoa e definir papel operacional (filtrando pessoas já vinculadas).
+  - [X] Ação para remover vínculo de envolvido.
+  - [X] Tratamento do cálculo e atualização do status de anonimato do relato.
 
 ### 2.3 Bônus & Usabilidade (Diferenciais)
 - [ ] Atualizar `Dashboard.page.tsx` com cards e métricas (total de pessoas, proporção de relatos anônimos vs identificados).
@@ -50,14 +50,14 @@ Este documento detalha o roteiro prático e detalhado de execução, organizado 
 ---
 
 ## Fase 3: Validação, Evidências e Entrega
-- [ ] **3.1 Testes Manuais dos Cenários Obrigatórios**
-  - [ ] Teste de criação e listagem de pessoas.
-  - [ ] Teste de tentativa de duplicidade de CPF (HTTP 409).
-  - [ ] Teste de vínculo de pessoas e cálculo de relato Anônimo vs Identificado.
-  - [ ] Teste de tentativa de vincular mesma pessoa duas vezes no mesmo relato (HTTP 409).
-- [ ] **3.2 Documentação de Evidências**
-  - [ ] Captura de telas/evidências visuais.
-  - [ ] Criação do arquivo `EVIDENCES.md` detalhando passos, esperado e obtido.
+- [X] **3.1 Testes Manuais dos Cenários Obrigatórios**
+  - [X] Teste de criação e listagem de pessoas.
+  - [X] Teste de tentativa de duplicidade de CPF (HTTP 409).
+  - [X] Teste de vínculo de pessoas e cálculo de relato Anônimo vs Identificado.
+  - [X] Teste de tentativa de vincular mesma pessoa duas vezes no mesmo relato (HTTP 409).
+- [X] **3.2 Documentação de Evidências**
+  - [X] Captura de telas/evidências visuais.
+  - [X] Criação do arquivo `EVIDENCES.md` detalhando passos, esperado e obtido.
 - [ ] **3.3 Finalização**
   - [ ] Revisão geral do código e commits no repositório.
   - [ ] Preenchimento e envio do formulário oficial de encerramento.

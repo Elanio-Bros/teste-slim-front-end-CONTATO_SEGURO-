@@ -76,5 +76,69 @@ Este documento registra a execução dos testes manuais dos cenários descritos 
 ---
 
 ## Épico 2: Gestão de Envolvimentos nos Relatos
-*(Será documentado após a implementação dos cenários do Épico 2)*
+
+### Cenário 6: Vínculo de Envolvidos e Diferenciação de Participação e Anonimato
+- **O que foi testado:** Vínculo de participantes a um relato e verificação da diferenciação visual na coluna **Identificação** (`Sem Participantes` vs `Anônimo` vs `Identificado`).
+- **Como foi testado:**
+  1. Acessou-se o menu **Relatos** (`/records`) e verificou-se a coluna **Identificação** exibindo a tag cinza `Sem Participantes` para relatos sem nenhuma pessoa cadastrada;
+  2. Clicou-se em **Editar** um relato;
+  3. Na seção **Pessoas Envolvidas**, selecionou-se uma pessoa com o papel **Testemunha** (ou Vítima/Denunciado) e clicou-se em **Adicionar**;
+  4. Observou-se na tabela principal que o relato passou a ser classificado como `Anônimo` (pois possui participantes, mas nenhum relatante);
+  5. Em seguida, adicionou-se uma pessoa com o papel de **Relatante** (`whistleblower`).
+- **Resultado esperado:** 
+  - Relatos sem nenhum envolvido exibem `Sem Participantes`;
+  - Relatos com participantes, mas sem relatante, exibem a tag `Anônimo`;
+  - Relatos com ao menos um relatante exibem a tag verde `Identificado`.
+- **Resultado obtido:** Os 3 estados de identificação funcionaram com precisão, proporcionando clareza operacional para o membro de comitê.
+- **Evidência Visual:**
+  ![Vínculo de Envolvidos e Anonimato](docs/evidences/photos/06-vinculo-envolvidos-anonimato.png)
+
+---
+
+### Cenário 7: Desvinculação de Envolvido do Relato
+- **O que foi testado:** Remoção de um participante previamente associado ao relato através do modal de edição.
+- **Como foi testado:**
+  1. No modal de edição de relato, localizou-se uma pessoa na tabela da seção **Pessoas Envolvidas**;
+  2. Clicou-se no botão de lixeira vermelho;
+  3. No diálogo de confirmação (*"Deseja remover esta pessoa do relato?"*), confirmou-se a ação clicando em **Sim**.
+- **Resultado esperado:** Disparo da requisição `DELETE /records/:recordId/involvements/:id`, mensagem de sucesso e remoção imediata da pessoa da lista de envolvidos. Caso o envolvido removido fosse o único relatante, o relato deve voltar a ser classificado como `Anônimo`.
+- **Resultado obtido:** Registro removido com sucesso e status de anonimato recalculado adequadamente.
+- **Evidência Visual:**
+  ![Desvinculação de Envolvido](docs/evidences/photos/07-desvinculo-envolvido.png)
+
+---
+
+### Cenário 8: Prevenção de Duplicidade de Pessoa no Mesmo Relato
+- **O que foi testado:** Mecanismo de prevenção do front-end para impedir que a mesma pessoa seja adicionada mais de uma vez ao mesmo relato (evitando erro HTTP 409).
+- **Como foi testado:**
+  1. Vinculou-se uma pessoa a um relato;
+  2. Abriu-se novamente o seletor "Selecione uma pessoa" para adicionar mais um participante.
+- **Resultado esperado:** O seletor deve filtrar e omitir as pessoas que já foram vinculadas àquele relato específico, permitindo selecionar apenas pessoas ainda não participantes.
+- **Resultado obtido:** Filtro ativo com sucesso. As pessoas já vinculadas deixam de aparecer nas opções do seletor, prevenindo conflitos antes da submissão.
+- **Evidência Visual:**
+  ![Prevenção de Duplicidade](docs/evidences/photos/08-prevencao-duplicidade.png)
+
+---
+
+## 3. Limitações do Back-end
+
+Durante os testes de integração do Épico 2, foi identificada uma nuance no comportamento do back-end (`server/`):
+
+- **Comportamento no Cadastro (`CreateRecordModal`):**
+  No fluxo de criação de relato, a associação de pessoas e papéis funciona perfeitamente, inserindo novos registros no banco sem nenhuma inconsistência.
+- **Comportamento na Edição/Atualização (`EditRecordModal`):**
+  Ao desvincular um participante de um relato via `DELETE /records/:recordId/involvements/:id` e, em seguida, tentar reassociar essa mesma pessoa ao mesmo relato, a API devolve o erro:
+  `SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '1-1' for key 'involvements.record_id'` (HTTP 500).
+  *Exemplo reproduzido no Relato #2:* Vinculou-se a pessoa "Ana Silva" como Relatante e "Carla" como envolvida. Após excluí-las do relato, nenhuma das duas pôde ser adicionada novamente àquele mesmo relato devido à colisão na chave primária/única física do MySQL.
+- **Evidência Visual do Erro de Back-end:**
+  ![Erro de Integridade SQL no Back-end](docs/evidences/photos/09-nuance-sql-softdelete.png)
+- **Causa Raiz Identificada:**
+  1. O model `Involvement` no PHP utiliza a trait `Illuminate\Database\Eloquent\SoftDeletes`, mantendo o registro no banco com a data preenchida na coluna `deleted_at`.
+  2. No MySQL, a migração `20260610000003_involvement.php` criou um índice único composto restrito:
+     ```php
+     $table->addIndex(['record_id', 'person_id'], ['unique' => true]);
+     ```
+  3. No método `InvolvementService::create`, a verificação de existência executa `Involvement::where(...)->exists()`, que ignora registros deletados por padrão (`WHERE deleted_at IS NULL`). O Eloquent avalia que a pessoa não existe e tenta realizar o `INSERT`, colidindo com o índice único do MySQL que ainda mantém o registro soft-deleted.
+- **Conduta:**
+  Como a regra estrita do teste veda modificações no diretório `server/`, o comportamento foi devidamente mapeado, mantendo a integridade do código do back-end e registrando esta análise técnica como evidência.
 
